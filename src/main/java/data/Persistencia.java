@@ -8,6 +8,7 @@ public class Persistencia {
     private static ArrayList<Vehiculo> vehiculos = new ArrayList<>();
     private static ArrayList<Responsable> responsables = new ArrayList<>();
     private static ArrayList<Sucursal> sucursales = new ArrayList<>();
+    private static ArrayList<Marca> marcas = new ArrayList<>();
     
     private static void inicializarResponsables(){
         Responsable r1 = new Responsable("Carlos Gómez", "25444111", "3815551111");
@@ -25,15 +26,22 @@ public class Persistencia {
     }
     
     private static void inicializarVehiculos(){
-        Sucursal s1 = sucursales.get(0);
+       Sucursal s1 = sucursales.get(0);
         Sucursal s2 = sucursales.get(1);
         
-        VehiculoElectrico v1 = new VehiculoElectrico("AE123FG", "Renault", "Kangoo E-Tech", 2020, 1000, s1, 16);
-        VehiculoElectrico v2 = new VehiculoElectrico("AF456HI", "Ford", "E-Transit", 2021, 1300, s2, 16);
-
-        VehiculoCombustible v3 = new VehiculoCombustible("AC789JK", "Iveco", "Daily", 2023, 1200, s1, 8, 1.5);
-        VehiculoCombustible v4 = new VehiculoCombustible("AD321LM", "Mercedes", "Sprinter", 2020, 1200, s2, 7, 1);
+        Marca renault = new Marca("Renault", "Francia");
+        Marca ford = new Marca("Ford", "EE.UU.");
+        Marca iveco = new Marca("Iveco", "Italia");
+        Marca mercedes = new Marca("Mercedes", "Alemania");
+        marcas.add(renault);
+        marcas.add(ford);
+        marcas.add(iveco);
+        marcas.add(mercedes);
         
+        VehiculoElectrico v1 = new VehiculoElectrico("AE123FG", renault, "Kangoo E-Tech", 2020, 1000, s1, 16);
+        VehiculoElectrico v2 = new VehiculoElectrico("AF456HI", ford, "E-Transit", 2021, 1300, s2, 16);
+        VehiculoCombustible v3 = new VehiculoCombustible("AC789JK", iveco, "Daily", 2023, 1200, s1, 8, 1.5);
+        VehiculoCombustible v4 = new VehiculoCombustible("AD321LM", mercedes, "Sprinter", 2020, 1200, s2, 7, 1);
         vehiculos.add(v1);
         vehiculos.add(v2);
         vehiculos.add(v3);
@@ -55,4 +63,21 @@ public class Persistencia {
         inicializarSucursales();
         inicializarVehiculos();
     }
+    
+    
+    public static Optional<Marca> getMarca(String nombre){
+    return marcas.stream()
+            .filter(m -> m.getNombre().equals(nombre))
+            .findFirst();
+}
+
+public static Optional<Sucursal> getSucursal(String codigo){
+    return sucursales.stream()
+            .filter(s -> s.getCodigo().equals(codigo))
+            .findFirst();
+}
+   
+    public static void agregarVehiculo(Vehiculo v){
+    vehiculos.add(v);
+}
 }
